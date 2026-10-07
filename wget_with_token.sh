@@ -9,7 +9,7 @@ fi
 
 token_file=$2
 if [ ! "$token_file" ]; then
-  token_file=`dirname $0`/wget_token.txt
+  token_file=`dirname $0`/.wget_token.txt
 fi
 
 if [ ! -f "$token_file" ]; then
