@@ -79,10 +79,10 @@ else
     cloudpave_enclave_storage "$storage_dir"
 fi
 
-venvs_tgz="$storage_dir/personal/lambda_archive.tar.gz"
-venvs_dir="$HOME/lambda_archive"
-if [ -f $venvs_tgz ] && [ ! -f $venvs_dir ]; then
+archive_tgz="$storage_dir/personal/lambda_archive.tar.gz"
+archive_dir="$HOME/lambda_archive"
+if [ -f $archive_tgz ] && [ ! -f $archive_dir ]; then
   echo "Extracting archive from GCS..."
-  mkdir -p $venvs_dir
-  tar -xzf $venvs_tgz -C $venvs_dir
+  mkdir -p $archive_dir
+  tar -xzf $archive_tgz -C $archive_dir
 fi
