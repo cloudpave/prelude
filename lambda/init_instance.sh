@@ -61,6 +61,20 @@ else
   npm install -g pnpm
 fi
 
+if [ `command -v python3.12` ]; then
+  echo "python3.12 is installed."
+else
+  echo "Installing python3.12..."
+  sudo apt update
+  sudo apt install -y python3.12 python3.12-venv
+fi
+
+if [ `command -v uv` ]; then
+  echo "uv is installed."
+else
+  echo "Installing uv..."
+  pip install uv
+fi
 
 # Mount enclave storage using gcsfuse.
 storage_dir="$HOME/cloudpave_enclave_storage"
