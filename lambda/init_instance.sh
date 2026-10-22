@@ -61,6 +61,7 @@ else
   npm install -g pnpm
 fi
 
+# install python3.12 if not already installed.
 if [ `command -v python3.12` ]; then
   echo "python3.12 is installed."
 else
@@ -69,6 +70,7 @@ else
   sudo apt install -y python3.12 python3.12-venv
 fi
 
+# install uv if not already installed.
 if [ `command -v uv` ]; then
   echo "uv is installed."
 else
