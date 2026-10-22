@@ -20,7 +20,7 @@ fi
 
 
 # Make sure gcsfuse is installed.
-if [ `command -v gcsfuse` ]; then
+if command -v gcsfuse; then
   echo "gcsfuse is already installed."
 else
   echo "Installing gcsfuse..."
@@ -31,7 +31,7 @@ else
   gcsfuse_repo_url=https://packages.cloud.google.com/apt
   if [ ! -f $gcsfuse_list ]; then
     echo "Installing gcsfuse..."
-    gcsfuse_repo="gcsfuse-`lsb_release -c -s`"
+    gcsfuse_repo="gcsfuse-$(lsb_release -c -s)"
     echo "deb $gcsfuse_repo_url $gcsfuse_repo main" | sudo tee $gcsfuse_list
   fi
 
@@ -50,11 +50,12 @@ fi
 
 
 # install pnpm if not already installed.
-if [ `command -v pnpm` ]; then
+if command -v pnpm; then
   echo "pnpm is installed."
 else
   echo "Installing pnpm..."
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | bash
+  # shellcheck disable=SC1091
   source "$HOME/.bashrc"
   nvm install 22
   nvm use 22
@@ -62,7 +63,7 @@ else
 fi
 
 # install python3.12 if not already installed.
-if [ `command -v python3.12` ]; then
+if command -v python3.12; then
   echo "python3.12 is installed."
 else
   echo "Installing python3.12..."
@@ -71,7 +72,7 @@ else
 fi
 
 # install uv if not already installed.
-if [ `command -v uv` ]; then
+if command -v uv; then
   echo "uv is installed."
 else
   echo "Installing uv..."
@@ -90,15 +91,15 @@ else
   fi
   mkdir -p "$storage_dir"
   gcsfuse --implicit-dirs --key-file="$gcloud_key_file" \
-    --cache-dir=$HOME/gcs_cache_enclave \
+    --cache-dir="$HOME/gcs_cache_enclave" \
     --file-cache-max-size-mb=-1 --enable-streaming-writes \
     cloudpave_enclave_storage "$storage_dir"
 fi
 
 archive_tgz="$storage_dir/personal/lambda_archive.tar.gz"
 archive_dir="$HOME/lambda_archive"
-if [ -f $archive_tgz ] && [ ! -f $archive_dir ]; then
+if [ -f "$archive_tgz" ] && [ ! -d "$archive_dir" ]; then
   echo "Extracting archive from GCS..."
-  mkdir -p $archive_dir
-  tar -xzf $archive_tgz -C $archive_dir
+  mkdir -p "$archive_dir"
+  tar -xzf "$archive_tgz" -C "$archive_dir"
 fi
